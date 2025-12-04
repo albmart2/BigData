@@ -1,4 +1,6 @@
-# Master in BigData & Buisness Inteligence
+# Máster en BigData & Buisness Analytics
+
+Máster en Big Data y Business Analytics en IMF Buisness School.
 
 ## 📌 Descripción General
 
@@ -24,3 +26,8 @@ Para ejecutar los proyectos de este repositorio, sigue estos pasos:
     ```
 
 3. Sigue las instrucciones del archivo README dentro de cada carpeta de proyecto para la configuración y ejecución específica.
+
+## 📁 ¿Qué encontraras?
+
+Cada carpeta corresponderá a un módulo distinto del máster. El máster se divide en 9 módulos:
+- MÓDULO 1 - 
