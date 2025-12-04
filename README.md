@@ -30,4 +30,4 @@ Para ejecutar los proyectos de este repositorio, sigue estos pasos:
 ## 📁 ¿Qué encontraras?
 
 Cada carpeta corresponderá a un módulo distinto del máster. El máster se divide en 9 módulos:
-- MÓDULO 1 - 
+- [MÓDULO 1 - Fundamentos de tratamiento de datos para Data Science](https://github.com/albmart2/BigData/tree/main/M%C3%93DULO%201%20-%20Fundamentos%20de%20tratamiento%20de%20datos%20para%20Data%20Science)
