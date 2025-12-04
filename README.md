@@ -1,18 +1,26 @@
 # Master in BigData & Buisness Inteligence
-Welcome to the repository where I will be uploading all of the projects and assignments I complete throughout my Master’s program in Big Data & Business Intelligence. This repository is a collection of various projects that demonstrate my learning journey in data analysis, business intelligence tools, machine learning, data visualization, and more. Each folder will contain individual projects, with a brief description, requirements, and execution instructions.
 
-## Setup Instructions
+## 📌 Descripción General
 
-To run the projects in this repository, please follow these steps:
+Bienvenido/a al repositorio donde iré subiendo todos los proyectos y trabajos realizados durante mi Máster en Big Data & Business Intelligence.
+Este repositorio recopila diferentes proyectos que reflejan mi aprendizaje en análisis de datos, herramientas de business intelligence, machine learning, visualización de datos y más.
 
-Clone the repository to your local machine:
+Cada carpeta contendrá un proyecto individual acompañado de un README propio con su explicación, requisitos e instrucciones de ejecución.
 
-git clone https://github.com/yourusername/your-repository-name.git
+## 🛠️ Instrucciones de Configuración
 
+Para ejecutar los proyectos de este repositorio, sigue estos pasos:
 
-Navigate to the project directory and install any required dependencies. For example, for Python-based projects, you might need to create a virtual environment and install packages with:
+1. Clona el repositorio en tu máquina local:
 
-pip install -r requirements.txt
+    ```bash
+    git clone https://github.com/albmart2/BigData.git
+    ```
 
+2. Navega al directorio del proyecto e instala las dependencias necesarias. Por ejemplo, para proyectos basados en Python, puede que necesites crear un entorno virtual e instalar los paquetes con:
 
-Follow the instructions in each project folder’s README for specific setup and execution instructions.
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3. Sigue las instrucciones del archivo README dentro de cada carpeta de proyecto para la configuración y ejecución específica.
