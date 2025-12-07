@@ -25,6 +25,16 @@ FOREIGN KEY ( Nombre_Inst ) REFERENCES
 UNIQUE ( ID, Nombre_Inst, Via ) );
 ```
 
+Hacer las siguientes consultas:
+1. Obtener los nombres y notas de los estudiantes, así como el resultado de su solicitud, de manera que tengan un valor de corrección menor que 1000 y hayan solicitado la vía de “Tecnología” en el “Instituto Ramiro de Maeztu”.
+2. Obtener la información sobre todas las solicitudes: ID y nombre del estudiante, nombre del instituto, puntos y plazas, ordenadas de forma decreciente por los puntos y en orden creciente de plazas.
+3. Obtener todas las solicitudes a vías denominadas como “Ciencias” o “Ciencias Sociales”.
+4. Obtener los estudiantes cuya puntuación ponderada cambia en más de un punto respecto a la puntuación original.
+5. Borrar a todos los estudiantes que solicitaron más de dos vías diferentes.
+6. Obtener las vías en las que la puntuación máxima de las solicitudes está por debajo de la media.
+7. Obtener los nombres de los estudiantes y las vías que han solicitado.
+8. Obtener el nombre de los estudiantes y la puntuación con valor de ponderación menor de 1000 que hayan solicitado la vía de “Tecnología” en el “Instituto San Isidro”.
+
 ## DATOS
 Rellenar las tablas con los siguientes datos:
 
@@ -39,4 +49,5 @@ Rellenar las tablas con los siguientes datos:
 ### Tabla Solicitudes
 
 <img width="757" height="800" alt="image" src="https://github.com/user-attachments/assets/2bfb8820-6b0a-47c2-bf8b-75d57d407200" />
+
 
