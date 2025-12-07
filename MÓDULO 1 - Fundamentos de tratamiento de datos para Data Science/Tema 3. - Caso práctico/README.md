@@ -1,4 +1,4 @@
-# Que dice
+# Que pide
 
 ## ENUNCIADO
 
@@ -39,3 +39,4 @@ Rellenar las tablas con los siguientes datos:
 ### Tabla Solicitudes
 
 <img width="757" height="800" alt="image" src="https://github.com/user-attachments/assets/2bfb8820-6b0a-47c2-bf8b-75d57d407200" />
+
