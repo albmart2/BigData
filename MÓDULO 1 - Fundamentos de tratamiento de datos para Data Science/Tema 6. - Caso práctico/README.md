@@ -5,3 +5,7 @@
 2. Usando las series anteriores, obtener otra serie que contenga la diferencia de sueldos entre mujeres y hombres.
 
 3. Usando la serie anterior que contiene las diferencias de sueldos, obtener las ciudades donde la diferencia de sueldos es mayor de 100 euros.
+
+## Soluciones
+### <i> Solución A</i>
+<img width="485" height="306" alt="image" src="https://github.com/user-attachments/assets/9124356e-8fe2-4291-8739-e6d623adc192" />
