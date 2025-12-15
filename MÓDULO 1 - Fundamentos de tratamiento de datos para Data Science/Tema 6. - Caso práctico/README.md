@@ -7,5 +7,8 @@
 3. Usando la serie anterior que contiene las diferencias de sueldos, obtener las ciudades donde la diferencia de sueldos es mayor de 100 euros.
 
 ## Soluciones
-### <i> Solución A</i>
-<img width="485" height="306" alt="image" src="https://github.com/user-attachments/assets/9124356e-8fe2-4291-8739-e6d623adc192" />
+### <i>Solución 1:</i>
+<img width="481" height="309" alt="image" src="https://github.com/user-attachments/assets/f5980749-0018-4663-9433-9c55c80a69b4" />
+
+### <i>Solución 2:
+<img width="216" height="148" alt="image" src="https://github.com/user-attachments/assets/1e159f48-e9b2-4f40-889f-9e7f42355fbd" />
