@@ -12,3 +12,6 @@
 
 ### <i>Solución 2:
 <img width="216" height="148" alt="image" src="https://github.com/user-attachments/assets/1e159f48-e9b2-4f40-889f-9e7f42355fbd" />
+
+### <i>Solución 3:</i>
+<img width="176" height="149" alt="image" src="https://github.com/user-attachments/assets/44453175-041e-49a3-8210-e84e9b30a95a" />
