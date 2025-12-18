@@ -22,3 +22,7 @@ Esta función debe generar una gráfica lineal, donde se muestre la progresión 
 ## SOLUCIONES
 ### <i>Solución 1:</i>
 <img width="563" height="338" alt="image" src="https://github.com/user-attachments/assets/7e3f9ec6-cab2-49dc-b209-53ab0b45a0f9" />
+
+### <i>Solución 2:</i>
+<img width="563" height="395" alt="image" src="https://github.com/user-attachments/assets/0e5ad40c-961c-42d5-8e9d-eecff05bd816" />
+
