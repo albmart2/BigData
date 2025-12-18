@@ -31,3 +31,6 @@ Esta función debe generar una gráfica lineal, donde se muestre la progresión 
 
 ### <i>Solución 4:</i>
 <img width="563" height="99" alt="image" src="https://github.com/user-attachments/assets/de6df20b-4a49-4c77-beb4-4b57bf4aa5bd" />
+
+### <i>Solución 5:</i>
+<img width="451" height="369" alt="image" src="https://github.com/user-attachments/assets/330f40dc-0efd-4ae6-94cb-7743a6cd168c" />
