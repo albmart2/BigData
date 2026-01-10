@@ -47,3 +47,10 @@ El propio enunciado indica qué elementos se necesitarán para la capa de explot
 
 ### Cuadro de mando
 <img width="676" height="303" alt="image" src="https://github.com/user-attachments/assets/e1c42393-2584-4737-9d22-fadfc733c949" />
+
+### Informe 
+<img width="421" height="296" alt="image" src="https://github.com/user-attachments/assets/1d36f891-8508-4f58-a27c-11c8899e8c2a" />
+
+### Vista dinámica OLAP
+<img width="492" height="259" alt="image" src="https://github.com/user-attachments/assets/378ab14d-f99b-4705-82e2-a252f35a4f84" />
+
