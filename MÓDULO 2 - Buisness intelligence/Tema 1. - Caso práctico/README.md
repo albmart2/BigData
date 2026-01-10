@@ -44,3 +44,6 @@ El propio enunciado indica qué elementos se necesitarán para la capa de explot
 - Mediante la implementación de un cuadro de mando para la dirección, se puede mantener el control y gestión de los indicadores clave KPI definidos.
 - Los usuarios también demandan una capa de reporting que les permita realizar informes de un nivel de detalle alto y que la generación de información pueda ser automatizada de forma periódica y con exportación por correo electrónico.
 - Por último, el enunciado indica la necesidad de explorar la información para su análisis. Como ya se sabe, esto hace referencia a los visores OLAP, herramientas especialmente diseñadas para facilitar de forma ágil y eficiente el análisis y navegación a través de la información, con procesamiento analítico online.
+
+### Cuadro de mando
+<img width="676" height="303" alt="image" src="https://github.com/user-attachments/assets/e1c42393-2584-4737-9d22-fadfc733c949" />
