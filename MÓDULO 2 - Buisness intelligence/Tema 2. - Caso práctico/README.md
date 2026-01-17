@@ -1,89 +1,56 @@
 # Tema 2. Caso práctico.
 ## Enunciado
-Una compañía del sector financiero realiza el scoring de numerosos clientes y entidades, a partir de los datos e información que recibe de numerosas entidades y fuentes de datos externas.
+Una compañía internacional de alquiler de vehículos necesita una solución de inteligencia de negocio como soporte para la toma decisiones estratégicas. Dicha compañía tiene presencia en tres países y una flota de vehículos: turismos, gran tonelaje y furgonetas.
 
-A diario, esta compañía recibe miles de ficheros que son depositados por fuentes externas en repositorios para ser procesados a continuación y cargarlos en el data warehouse corporativo de la compañía.
-
-Sin embargo, la compañía pretende diseñar un proceso de data quality que permita descartar de forma automática los ficheros fuentes que tengan algún error y cargar únicamente la información que sea correcta.
+El objetivo de la compañía es poder analizar las ventas (rentings) y su evolución histórica por zonas geográficas, para poder redistribuir su flota en función de la demanda y optimizar con ello su ratio de uso. Para ello, se dispone de las bases de datos operacionales de ventas y flotas de cada país.
 
 ## Se pide
+Basándose en un sistema de inteligencia de negocio tradicional, explicar y representar gráficamente la arquitectura de solución que implementar, diferenciando herramientas o elementos para usar en <i>back-end</i> y <i>front-end</i> y teniendo en cuenta que las necesidades de la dirección de la compañía son:
 
-Realizar el diseño e implementación de una solución sencilla de proceso de data quality que permita verificar, en un proceso previo a la carga en el DW, que la información que se carga cumple unas reglas de formato y negocio definidas por la compañía. En concreto, se solicita:
-
-- Proceso automatizado de data quality.
-- Lectura periódica de fichero en formato Excel, .XLS.
-- Notificación de error de lectura de fichero o no existencia de fichero en repositorio de destino.
-- Aplicación de cuatro reglas de negocio definidas por la compañía.
-- Cargar únicamente la información válida en el DW corporativo.
-- Enviar notificación a la compañía origen del fichero, para reenvío de información errónea.
-
-Así como la definición de las reglas que deben cumplirse:
-
-- Regla 1:
-    - Que CL_RAMO_MOD contenga alguno de estos valores: “14A”, “14D”, “14E”, “14H”, “14L”, “14M”, “14P”, “14R”, “14T”, “14U”, “14Z”.
-- Regla 2:
-    - Que FECHA_EFECTO sea mayor que FECHA_CALCULO.
-- Regla 3:
-    - En los casos en los que el campo AGE_AT_ENTRY < 14 -> hay que realizar un recálculo del campo AGE_AT_ENTRY == ROUND((FECHA_EFECTO - FECHA_NACIMIENTO) / 365.25)
-- Regla 4:
-    - El campo POLIZA debe tener una longitud igual a 9.
- 
-<img width="1128" height="294" alt="image" src="https://github.com/user-attachments/assets/51ec5d8d-a3fc-45b7-96dc-857ec54c8487" />
+- Monitorizar el estado de varios indicadores clave.
+- Enviar informes detallados a cada una de las sedes de forma periódica.
+- Facilitar la exploración y análisis de los datos corporativos y su posible dependencia con factores externos.
 
 ## Solución
 
-Este caso se va a afrontar con la herramienta de procesamiento y ETL de Pentaho, Pentaho Data Integration. 
+Tal y como solicita el enunciado, hay que plantear una arquitectura de solución de inteligencia de negocio tradicional, basada en tres capas: capa de datos, de aplicación y de presentación.
 
-Y, para ello, primero se va a realizar un diseño top-down de la posible solución e implementación, teniendo en cuenta que es una solución recomendada, orientada a que el alumno entienda y asimile algunos conceptos básicos.
+Del mismo modo, el enunciado exige identificar los elementos o herramientas de la solución que conforman el <i>back-end</i> y el <i>front-end</i>.
 
-Se comienza con el diseño a nivel conceptual, mediante diagramas de flujo, de cómo se van a procesar los datos y qué acciones hay que incluir en el proceso de información:
+**a. Recuérdese que en el <i>back-end</i> se identifican:**
 
-<img width="894" height="382" alt="image" src="https://github.com/user-attachments/assets/20da7271-2fc2-4c36-9ebc-a7e875387128" />
+- Fuentes de datos: los distintos orígenes de información que se deben incluir para realizar los análisis requeridos. En este caso, y con la información del enunciado, al menos, se han de identificar diez fuentes de datos:
+    - Sede 1:
+        - Base de datos Ventas1.
+        - Base de datos de Flota1.
+        - Información de Sede1 georreferenciada.
+    - Sede 2:
+        - Base de datos Ventas2.
+        - Base de datos de Flota2.
+        - Información de Sede2 georreferenciada.
+    - Sede 3:
+        - Base de datos Ventas3.
+        - Base de datos de Flota3.
+        - Información de Sede3 georreferenciada.
+    - Fuente externa: análisis de posible dependencia con información climatológica.
+- Procesos ETL: procesos para la extracción de los datos de los distintos orígenes, transformación para unificar, homogeneizar y consolidar la información en un mismo repositorio.
+- <i>Data warehouse/datamart</i>: como repositorio destino de toda la información y que estará especialmente diseñado para contestar ciertas preguntas del negocio.
+- Motor OLAP: especialmente indicado para proporcionar capacidad analítica sobre el almacén de datos.
 
-Para implementar el flujo anterior, se crea un nuevo “trabajo” en PDI:
+**b. En el <i>front-end</i>:**
 
-1. Ir a Archivo > Nuevo > Trabajo.
+El propio enunciado indica qué elementos se necesitarán para la capa de explotación de la información:
 
-    <img width="936" height="650" alt="image" src="https://github.com/user-attachments/assets/143e9757-4574-45ea-817a-c9898e9a2b23" />
+- Mediante la implementación de un cuadro de mando para la dirección, se puede mantener el control y gestión de los indicadores clave KPI definidos.
+- Los usuarios también demandan una capa de reporting que les permita realizar informes de un nivel de detalle alto y que la generación de información pueda ser automatizada de forma periódica y con exportación por correo electrónico.
+- Por último, el enunciado indica la necesidad de explorar la información para su análisis. Como ya se sabe, esto hace referencia a los visores OLAP, herramientas especialmente diseñadas para facilitar de forma ágil y eficiente el análisis y navegación a través de la información, con procesamiento analítico online.
 
-2. Expandir la carpeta “General” y arrastrar una entrada de trabajo de inicio al espacio de trabajo gráfico. La entrada del trabajo de inicio define dónde comenzará la ejecución.
+### Cuadro de mando
+<img width="676" height="303" alt="image" src="https://github.com/user-attachments/assets/e1c42393-2584-4737-9d22-fadfc733c949" />
 
-3. Seleccionar y arrastrar una entrada de inicio o “Start”, que definirá el inicio del trabajo.
+### Informe 
+<img width="421" height="296" alt="image" src="https://github.com/user-attachments/assets/1d36f891-8508-4f58-a27c-11c8899e8c2a" />
 
-    <img width="737" height="550" alt="image" src="https://github.com/user-attachments/assets/a8d0d880-147c-459d-a0a0-0911addf9feb" />
+### Vista dinámica OLAP
+<img width="492" height="259" alt="image" src="https://github.com/user-attachments/assets/378ab14d-f99b-4705-82e2-a252f35a4f84" />
 
-4. Se incluye una entrada para comprobar si el fichero existe en una ubicación específica. Esta entrada falla si no encuentra el nombre exacto del fichero.
-
-    <img width="918" height="644" alt="image" src="https://github.com/user-attachments/assets/3d7eec82-1c9b-4ee5-b27d-1f52bb1075ed" />
-
-5. Se configura la entrada.
-
-    <img width="1359" height="523" alt="image" src="https://github.com/user-attachments/assets/493d6b34-bbfb-4fbf-81a2-e340f386c5cf" />
-
-6. Se incluye una entrada a una transformación para el caso de que sí exista el fichero de datos de entrada. Esta entrada de transformación se diseñará más adelante. 
-
-    Del mismo modo, se incluye una llamada a Abort para abortar el proceso, en caso de que el fichero de entrada no esté disponible.
-
-    <img width="893" height="538" alt="image" src="https://github.com/user-attachments/assets/cf3208d9-51d5-435d-87fe-3b901884bdf7" />
-
-7. El siguiente paso consiste en incluir las notificaciones que necesite el proceso. A continuación, se identifican tres:
-
-    1. Enviar un correo electrónico de notificación a la entidad que envía el fichero, cuando este no se encuentra en la carpeta prevista.
-    2. Enviar un correo electrónico a soporte, cuando el proceso de aplicación de las reglas no sea correcto o falle por cualquier motivo.
-    3. Tras el procesado de las reglas, filas de datos correctas son almacenadas en el DW, pero las que son erróneas se envían por correo electrónico a las entidades origen.
-
-    <img width="971" height="515" alt="image" src="https://github.com/user-attachments/assets/bc467b59-025b-424d-9670-26ca1ecc6d6c" />
-
-Para realizar el diseño, hay que tener claro cuál es el objetivo que se debe cumplir y plantear una estrategia de diseño. En este caso, se parte de un fichero de entrada, tal y como se muestra a continuación:
-
-<img width="963" height="306" alt="image" src="https://github.com/user-attachments/assets/3f1b3f51-747d-4382-8e5c-65878c8714c6" />
-
-En donde las filas marcadas en rojo no cumplen con alguna de las reglas que hay que aplicar. 
-
-La transformación tendrá, pues, como objetivo verificar fila a fila si cumple o no con cada una de las reglas definidas. El resultado final de esta transformación debe ser diferente para cada caso de fila. Es decir, para las filas que cumplen con todas las reglas, la salida debe ser un fichero igual al de entrada, y se debe incluir esta información en una tabla para su procesamiento en el DW.
-
-Las filas que incumplan una o más reglas deben ser separadas y agrupadas para crear un fichero de salida que contenga la información de entrada, así como la o las reglas que ha incumplido, con el propósito de poder reenviarlo al origen para su corrección.
-
-A continuación, se muestra una posible implementación:
-
-<img width="962" height="518" alt="image" src="https://github.com/user-attachments/assets/aada0a53-9273-48a2-98f2-a5f1a15ee9de" />
