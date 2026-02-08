@@ -100,6 +100,13 @@ def modelRadius(X, y, r):
 El resto de las figuras se puede obtener repitiendo este proceso con diferentes valores para el radio.
 
 ### Gráficas
+
+```Python
+modelRadius(X, y, 0.3)
+```
+
+<img width="322" height="245" alt="image" src="https://github.com/user-attachments/assets/569fb3a9-fb57-43a6-a563-5c8b492e1264" />
+
 ```Python
 modelRadius(X, y, 0.5)
 ```
