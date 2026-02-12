@@ -82,3 +82,11 @@ for i in range(max(clust) + 1):
 ```
 
 <img width="94" height="370" alt="image" src="https://github.com/user-attachments/assets/887367b3-4204-465d-884c-9d6001e8b529" />
+
+Atendiendo a los resultados, se observa que el número de clústeres es tres. Con esta información ya se puede aplicar el método <i>k-means</i> a los datos para obtener los centroides, lo que se puede realizar con el comando:
+
+```Python
+kmeans = KMeans(n_clusters=3, n_init=10).fit(mammals_data)
+```
+
+La posición de los centroides se puede localizar en la propiedad KmeansClusterCenters.
