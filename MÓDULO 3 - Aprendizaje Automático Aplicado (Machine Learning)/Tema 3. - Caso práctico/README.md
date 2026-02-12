@@ -10,7 +10,7 @@ A partir de esta información, segmentar los mamíferos sobre la base de los com
 
 Lo primero que se ha de hacer es importar el archivo con los datos, por lo que se han de utilizar pandas. Para importar los datos se puede utilizar el comando:
 
-```Bash
+```Python
 mammals = pd.read_csv('mammals.csv', sep = ',')
 ```
 Al cargar el conjunto de datos se aprecia que existen seis variables: el nombre del animal, el agua, la proteína, la grasa, la lactosa y la ceniza. Solamente las cinco últimas variables son numéricas, por lo que son las únicas que se utilizarán para realizar la segmentación.
