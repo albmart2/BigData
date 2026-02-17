@@ -78,9 +78,13 @@ for var in features:
 
 ```Python
 from pandas.plotting import scatter_matrix
+import matplotlib.pyplot as plt
 
-scatter_matrix(myopia, figsize = (12, 12), diagonal = 'kde');
+scatter_matrix(myopia, figsize=(12, 12), diagonal='kde')
+plt.show()
 ```
+
+<img width="160" height="449" alt="image" src="https://github.com/user-attachments/assets/4b5d0a52-8bb4-4d7b-a480-1c81828debb9" />
 
 ### Eliminación de las variables que son identificadores
 
