@@ -1,0 +1,323 @@
+# Caso práctico
+
+## Enunciado
+
+El archivo “myopia.csv”, disponible en esta sección, contiene los datos de un estudio llevado a cabo durante cinco años en el que se observó la salud ocular de una población. Los registros se corresponden con los valores tomados inicialmente en el mismo, y existe una variable, MYOPIC, en la que se registra si a los sujetos se les diagnosticó miopía durante el estudio.
+
+Las variables son:
+
+- <i>ID</i>: identificador ID.
+- <i>STUDYYEAR</i>: año en el que se inició el estudio.
+- <i>MYOPIC</i>: desarrollo de la miopía durante los primeros cinco años.
+- <i>AGE</i>: edad en la primera visita.
+- <i>GENDER</i>: sexo.
+- <i>SPHEQ</i>: refracción esférica equivalente.
+- <i>AL</i>: longitud axial.
+- <i>ACD</i>: profundidad de cámara anterior.
+- <i>LT</i>: grosor de la lente.
+- <i>VCD</i>: profundidad de cámara vítrea.
+- <i>SPORTHR</i>: cuántas horas a la semana, fuera de la escuela, participa el niño en deportes o actividades al aire libre.
+- <i>READHR</i>: cuántas horas a la semana, fuera de la escuela, lee el niño por placer.
+- <i>COMPHR</i>: cuántas horas a la semana, fuera de la escuela, pasa el niño jugando a videojuegos de ordenador o frente a la pantalla.
+- <i>STUDYHR</i>: cuántas horas a la semana, fuera de escuela, dedica el niño a las tareas escolares, leyendo o estudiando.
+- <i>TVHR</i>: cuántas horas a la semana, fuera de la escuela, ve la televisión el niño.
+- <i>DIOPTERHR</i>: compendio de horas de actividades de trabajo que se define como:
+
+    ```DIOPTERHR = 3 (READHR + STUDYHR) + 2 COMPHR + TVHR```
+
+- <i>MOMMY</i>: ¿La madre del niño es miope?
+- <i>DADMY</i>: ¿El padre del niño es miope?
+
+## Se pide
+
+A partir de este conjunto de datos, crear un modelo para predecir la aparición de miopía en el grupo de estudio.
+
+## Solución
+
+Inicialmente, se han de cargar los datos del archivo. Una vez hecho esto, se han de analizar los tipos de características, para lo que hay que contar el número de registros en cada nivel.
+
+```Python
+%pylab
+%matplotlib inline
+
+%config InlineBackend.figure_format = 'retina'
+```
+
+```Python
+import pandas as pd
+
+myopia = pd.read_csv('myopia.csv', sep = ';')
+
+# Separación de la variable objetivo y las explicativas
+target = 'MYOPIC'
+features = list(myopia.columns)
+features.remove('MYOPIC')
+
+# Listado de variables disponibles para hacer un modelo.
+for var in features:
+    print (var , ':' , len(set(myopia[var])))
+```
+
+```Python
+from pandas.plotting import scatter_matrix
+
+scatter_matrix(myopia, figsize = (12, 12), diagonal = 'kde');
+```
+
+### Eliminación de las variables que son identificadores
+
+```Python
+features.remove('ID')
+features.remove('STUDYYEAR')
+```
+
+### Análisis de las variables discretas
+
+```Python
+myopia[features].head()
+```
+
+```Python
+categorical = ['AGE', 'GENDER', 'MOMMY', 'DADMY']
+continuous = ['SPHEQ', 'AL', 'ACD', 'LT', 'VCD', 'SPORTHR' ,'READHR', 'COMPHR', 'TVHR', 'DIOPTERHR']
+
+for var in categorical:
+    print ("Tabla de frecuencias para:", var)
+    print (pd.crosstab(myopia[target], myopia[var]))
+    print
+```
+
+#### Variable: ```AGE```
+
+```Python
+def get_WoE(data, var, target):
+    crosstab = pd.crosstab(data[target], data[var])
+    
+    print ("Obteniendo el Woe para la variable", var, ":")
+    
+    for col in crosstab.columns:
+        if crosstab[col][1] == 0:
+            print ("  El WoE para", col, "[", sum(crosstab[col]), "] es infinito")
+        else:
+            print ("  El WoE para", col, "[", sum(crosstab[col]), "] es", np.log(float(crosstab[col][0]) / float(crosstab[col][1])))
+```
+
+```Python
+get_WoE(myopia, 'AGE', target)
+```
+
+```Python
+import numpy as np
+myopia.loc[:, 'AGE_grp'] = None
+
+for row in myopia.index:
+    if myopia.loc[row, 'AGE'] <= 7:
+        myopia.loc[row, 'AGE_grp'] = True
+    else:
+        myopia.loc[row, 'AGE_grp'] = False
+
+get_WoE(myopia, 'AGE_grp', target)
+```
+
+```Python
+features.remove('AGE')
+features.append('AGE_grp')
+
+categorical.remove('AGE')
+categorical.append('AGE_grp')
+```
+
+#### Evaluación del IV
+
+```Python
+from sklearn.linear_model.logistic import LogisticRegression
+
+def calculateIV(data, features, target):
+    result = pd.DataFrame(index = ['IV'], columns = features)
+    result = result.fillna(0)
+    var_target = np.array(data[target])
+    
+    for cat in features:
+        var_values = np.array(data[cat])
+        var_levels = np.unique(var_values)
+
+        mat_values = np.zeros(shape=(len(var_levels),2))
+        
+        for i in range(len(var_target)):
+            for j in range(len(var_levels)):
+                if var_levels[j] == var_values[i]:
+                    pos = j
+                    break
+
+            # Estimación del número valores en cada nivel
+            if var_target[i]:
+                mat_values[pos][0] += 1
+            else:
+                mat_values[pos][1] += 1
+
+            # Obtención del IV
+            IV = 0
+            for j in range(len(var_levels)):
+                if mat_values[j][0] > 0 and mat_values[j][1] > 0:
+                    rt = mat_values[j][0] / (mat_values[j][0] + mat_values[j][1])
+                    rf = mat_values[j][1] / (mat_values[j][0] + mat_values[j][1])
+                    IV += (rt - rf) * np.log(rt / rf)
+                    
+        # Se agrega el IV al listado
+        result[cat] = IV
+        
+    return result
+
+calculateIV(myopia, categorical, target)
+```
+
+### Análisis de las variables continuas
+
+El resto de las variables que quedan son númericas. Se pueden analizar para ver cómo se relacionan con la variable objetivo.
+
+```Python
+import matplotlib.pyplot  as plt
+for var in continuous:
+    f, axarr = plt.subplots(2, sharex = True)
+    
+    axarr[0].hist(myopia[var][myopia[target]==0])
+    axarr[1].hist(myopia[var][myopia[target]==1])
+    
+    axarr[0].set_ylabel('False')
+    axarr[1].set_ylabel('True')
+    axarr[0].set_title(var)
+```
+
+#### Variable: ```SPHEQ```
+
+```Python
+myopia.loc[:, 'SPHEQ_grp'] = myopia['SPHEQ'].map(lambda x: 'n0' if x < 0.05 else 'n1' if x < 0.6 else 'n2')
+get_WoE(myopia, 'SPHEQ_grp', target)
+calculateIV(myopia, ['SPHEQ_grp'], target)
+```
+
+Eliminación de las variables modificadas.
+
+```Python
+features.remove('SPHEQ')
+features.append('SPHEQ_grp')
+
+continuous.remove('SPHEQ')
+categorical.append('SPHEQ_grp')
+```
+
+### Creación de un modelo
+
+```Python
+use_features = features[:]
+use_features.remove('SPHEQ_grp')
+
+data_model = pd.concat([myopia[use_features], pd.get_dummies(myopia['SPHEQ_grp'], prefix = 'pclass')], axis = 1)
+```
+
+#### Eliminación de variables colineales
+
+```Python
+from sklearn.linear_model import LinearRegression
+
+def calculateVIF(data):
+    features = list(data.columns)
+    num_features = len(features)
+    
+    model = LinearRegression()
+    
+    result = pd.DataFrame(index = ['VIF'], columns = features)
+    result = result.fillna(0)
+    
+    for ite in range(num_features):
+        x_features = features[:]
+        y_featue = features[ite]
+        x_features.remove(y_featue)
+        
+        x = data[x_features]
+        y = data[y_featue]
+        
+        model.fit(data[x_features], data[y_featue])
+        
+        result[y_featue] = 1/(1 - model.score(data[x_features], data[y_featue]))
+    
+    return result
+
+def selectDataUsingVIF(data, max_VIF = 5):
+    result = data.copy(deep = True)
+    
+    VIF = calculateVIF(result)
+      #while VIF.as_matrix().max() > max_VIF:
+        #col_max = np.where(VIF == VIF.as_matrix().max())[1][0]
+   
+    while VIF.values.max() > max_VIF:
+        col_max= np.where(VIF==VIF.values.max())[1][0]
+     
+        features = list(result.columns)
+        features.remove(features[col_max])
+        result = result[features]
+        
+        VIF = calculateVIF(result)
+        
+    return result
+```
+
+```Python
+calculateVIF(data_model)
+```
+
+```Python
+model_vars = selectDataUsingVIF(data_model)
+calculateVIF(model_vars)
+```
+
+#### Separación de las variables en conjunto de muestra y validación
+
+```Python
+from sklearn.model_selection import train_test_split
+
+x_train, x_test, y_train, y_test = train_test_split(model_vars, myopia[target])
+```
+
+### Creación de un modelo y validación de un modelo
+
+```Python
+from sklearn.metrics import accuracy_score, auc, confusion_matrix, f1_score, precision_score, recall_score, roc_curve
+
+def metricas_modelos(y_true, y_pred):
+    from sklearn.metrics import accuracy_score, auc, confusion_matrix, f1_score, precision_score, recall_score, roc_curve
+
+    # Obtención de matriz de confusión
+    confusion_matrix = confusion_matrix(y_true, y_pred)
+
+    print ("La matriz de confusión es ")
+    print (confusion_matrix)
+
+    print ('Precisión:', accuracy_score(y_true, y_pred))
+    print ('Exactitud:', precision_score(y_true, y_pred))
+    print ('Exhaustividad:', recall_score(y_true, y_pred))
+    print ('F1:', f1_score(y_true, y_pred))
+
+    false_positive_rate, recall, thresholds = roc_curve(y_true, y_pred)
+    roc_auc = auc(false_positive_rate, recall)
+
+    print ('AUC:', auc(false_positive_rate, recall))
+
+    plot(false_positive_rate, recall, 'b')
+    plot([0, 1], [0, 1], 'r--')
+    title('AUC = %0.2f' % roc_auc)
+```
+
+```Python
+from sklearn.linear_model.logistic import LogisticRegression
+
+model = LogisticRegression().fit(x_train, y_train)
+y_pred_train = model.predict(x_train)
+y_pred_test = model.predict(x_test)
+
+metricas_modelos(y_train, y_pred_train)
+```
+
+```Python
+metricas_modelos(y_test, y_pred_test)
+```
