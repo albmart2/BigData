@@ -58,6 +58,24 @@ for var in features:
     print (var , ':' , len(set(myopia[var])))
 ```
 
+- ID : 618
+- STUDYYEAR : 6
+- AGE : 5
+- GENDER : 2
+- SPHEQ : 511
+- AL : 254
+- ACD : 206
+- LT : 128
+- VCD : 226
+- SPORTHR : 40
+- READHR : 16
+- COMPHR : 18
+- STUDYHR : 14
+- TVHR : 28
+- DIOPTERHR : 75
+- MOMMY : 2
+- DADMY : 2
+
 ```Python
 from pandas.plotting import scatter_matrix
 
