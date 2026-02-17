@@ -337,7 +337,7 @@ def metricas_modelos(y_true, y_pred):
 ```
 
 ```Python
-from sklearn.linear_model.logistic import LogisticRegression
+metricas_modelos(y_test, y_pred_test)
 
 model = LogisticRegression().fit(x_train, y_train)
 y_pred_train = model.predict(x_train)
@@ -346,6 +346,10 @@ y_pred_test = model.predict(x_test)
 metricas_modelos(y_train, y_pred_train)
 ```
 
+<img width="158" height="82" alt="image" src="https://github.com/user-attachments/assets/4f9e6de4-6ead-41ce-86ec-b9fcaec4b5c9" />
+
 ```Python
 metricas_modelos(y_test, y_pred_test)
 ```
+<img width="162" height="85" alt="image" src="https://github.com/user-attachments/assets/1b6441bc-afc9-4257-bea9-1cdbebd7f811" />
+
