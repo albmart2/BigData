@@ -99,6 +99,8 @@ features.remove('STUDYYEAR')
 myopia[features].head()
 ```
 
+<img width="549" height="122" alt="image" src="https://github.com/user-attachments/assets/df80b1f3-52f5-4423-9c03-2cd6e8d8efcb" />
+
 ```Python
 categorical = ['AGE', 'GENDER', 'MOMMY', 'DADMY']
 continuous = ['SPHEQ', 'AL', 'ACD', 'LT', 'VCD', 'SPORTHR' ,'READHR', 'COMPHR', 'TVHR', 'DIOPTERHR']
@@ -108,6 +110,8 @@ for var in categorical:
     print (pd.crosstab(myopia[target], myopia[var]))
     print
 ```
+
+<img width="167" height="205" alt="image" src="https://github.com/user-attachments/assets/e9bb3452-9d62-4b0e-86ed-9ec9f9890da2" />
 
 #### Variable: ```AGE```
 
@@ -128,6 +132,8 @@ def get_WoE(data, var, target):
 get_WoE(myopia, 'AGE', target)
 ```
 
+<img width="200" height="62" alt="image" src="https://github.com/user-attachments/assets/8687a8aa-e4c3-4879-8960-9507f4f2d8b9" />
+
 ```Python
 import numpy as np
 myopia.loc[:, 'AGE_grp'] = None
@@ -141,6 +147,8 @@ for row in myopia.index:
 get_WoE(myopia, 'AGE_grp', target)
 ```
 
+<img width="215" height="33" alt="image" src="https://github.com/user-attachments/assets/b0b3386c-b4a4-4c19-8e56-0d373aa48bac" />
+
 ```Python
 features.remove('AGE')
 features.append('AGE_grp')
@@ -152,7 +160,7 @@ categorical.append('AGE_grp')
 #### Evaluación del IV
 
 ```Python
-from sklearn.linear_model.logistic import LogisticRegression
+from sklearn.linear_model import LogisticRegression
 
 def calculateIV(data, features, target):
     result = pd.DataFrame(index = ['IV'], columns = features)
@@ -193,6 +201,8 @@ def calculateIV(data, features, target):
 calculateIV(myopia, categorical, target)
 ```
 
+<img width="176" height="40" alt="image" src="https://github.com/user-attachments/assets/6a21b01b-512f-46c6-9b5c-25c324dccc41" />
+
 ### Análisis de las variables continuas
 
 El resto de las variables que quedan son númericas. Se pueden analizar para ver cómo se relacionan con la variable objetivo.
@@ -218,6 +228,8 @@ get_WoE(myopia, 'SPHEQ_grp', target)
 calculateIV(myopia, ['SPHEQ_grp'], target)
 ```
 
+<img width="212" height="41" alt="image" src="https://github.com/user-attachments/assets/7b448a0b-0311-45e0-93c3-a8823465fa33" />
+
 Eliminación de las variables modificadas.
 
 ```Python
@@ -241,6 +253,8 @@ data_model = pd.concat([myopia[use_features], pd.get_dummies(myopia['SPHEQ_grp']
 
 ```Python
 from sklearn.linear_model import LinearRegression
+import numpy as np
+import pandas as pd
 
 def calculateVIF(data):
     features = list(data.columns)
@@ -248,39 +262,27 @@ def calculateVIF(data):
     
     model = LinearRegression()
     
-    result = pd.DataFrame(index = ['VIF'], columns = features)
-    result = result.fillna(0)
+    result = pd.DataFrame(index=['VIF'], columns=features, dtype=float)
+    result = result.fillna(0.0)
     
     for ite in range(num_features):
         x_features = features[:]
         y_featue = features[ite]
         x_features.remove(y_featue)
         
-        x = data[x_features]
+        X = data[x_features]
         y = data[y_featue]
         
-        model.fit(data[x_features], data[y_featue])
+        model.fit(X, y)
+        r2 = model.score(X, y)
         
-        result[y_featue] = 1/(1 - model.score(data[x_features], data[y_featue]))
+        if r2 >= 0.999999:   # R² ≈ 1 -> VIF infinito
+            vif = np.inf
+        else:
+            vif = 1.0 / (1.0 - r2)
+        
+        result[y_featue] = vif
     
-    return result
-
-def selectDataUsingVIF(data, max_VIF = 5):
-    result = data.copy(deep = True)
-    
-    VIF = calculateVIF(result)
-      #while VIF.as_matrix().max() > max_VIF:
-        #col_max = np.where(VIF == VIF.as_matrix().max())[1][0]
-   
-    while VIF.values.max() > max_VIF:
-        col_max= np.where(VIF==VIF.values.max())[1][0]
-     
-        features = list(result.columns)
-        features.remove(features[col_max])
-        result = result[features]
-        
-        VIF = calculateVIF(result)
-        
     return result
 ```
 
@@ -288,10 +290,14 @@ def selectDataUsingVIF(data, max_VIF = 5):
 calculateVIF(data_model)
 ```
 
+<img width="673" height="47" alt="image" src="https://github.com/user-attachments/assets/96cdfc71-3a3a-4455-9b8f-ecf4d89983a2" />
+
 ```Python
 model_vars = selectDataUsingVIF(data_model)
 calculateVIF(model_vars)
 ```
+
+<img width="610" height="38" alt="image" src="https://github.com/user-attachments/assets/9051a2bf-54cf-4da8-ae03-12f2e576d06d" />
 
 #### Separación de las variables en conjunto de muestra y validación
 
