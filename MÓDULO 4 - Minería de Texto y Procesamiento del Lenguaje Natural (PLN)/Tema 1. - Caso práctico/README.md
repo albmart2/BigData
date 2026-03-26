@@ -13,8 +13,8 @@ Teniendo la frase de ejemplo que se muestra a continuación, ¿cuáles serían s
 
 ¿Cuáles serían los lemas de las siguientes palabras?
 
-|COMIDAS– PERRERA – CARRETA - URBANISMO|
-|--------------------------------------|
+|COMIDAS – PERRERA – CARRETA - URBANISMO|
+|---------------------------------------|
 
 ¿Cuáles podrían ser el merónimo y el hiperónimo de esta palabra?
 
