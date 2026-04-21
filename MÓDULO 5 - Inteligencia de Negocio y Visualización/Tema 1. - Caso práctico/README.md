@@ -36,3 +36,64 @@ La plataforma de comercio electrónico permite a las personas comprar productos:
         2. Área de staging.
         3. Área analítica (data mart).
         4. Área de visualización.
+
+## Solución
+
+1. Descargar fichero del portal.
+2. Datos de entrada que se van a analizar.
+
+    Los datos de entrada se componen de las siguientes columnas:
+    
+    Para analizar por el eje de productos:
+    - Category.
+    - Sub-Category.
+    - Manufacturer.
+    - Product Name.
+    - Segment.
+    
+    Para analizar por el eje de cliente:
+    - City.
+    - Country.
+    - Region.
+    - Customer Name.
+    - Postal Code.
+    - State.
+  
+    Datos propios de la venta:
+    - Discount.
+    - Number of Records.
+    - Order Date.
+    - Order ID.
+    - Profit.
+    - Quantity.
+    - Sales.
+    - Ship Date.
+    - Ship Mode.
+  
+3. Análisis del dataset:
+
+   El dataset tiene datos de 2015 a mayo de 2019. Abarca segmentos de productos como:
+    - Consumer.
+    - Corporate.
+    - Home Office.
+    
+    Y geográficamente tiene datos de Estados Unidos.
+
+5. Los datos permiten realizar análisis del siguiente tipo.
+
+   Los datos de entrada permiten responder a preguntas como:
+    - Beneficio que se obtiene por cada producto.
+    - Qué ciudad / estado compra más.
+    - Qué cliente es habitual / fiel a lo largo de los años.
+    - Productos que tienen una alta tasa de descuento.
+
+6. Arquitectura de BI.
+
+    Una arquitectura de BI clásica tiene cuatro fases:
+
+    - Origen de datos, dataset “Sample – Superstore.csv”. Fichero que podría generar un sistema operacional que gestiona las ventas.
+    - Se carga este fichero en una primera área de staging, donde está el dato en bruto.
+    - Se procesa y se carga a una tercera capa donde están los datos normalizados y formateados para el análisis.
+    - Y la cuarta fase es la visualización en sí.
+  
+<img width="1680" height="391" alt="image" src="https://github.com/user-attachments/assets/2a5693ca-abce-4fea-93bf-a947e9ec1e15" />
