@@ -43,3 +43,7 @@ Para realizar el análisis, el departamento financiero y de sistemas le entregan
 ### Beneficio vs Costes beneficios
 
 <img width="433" height="410" alt="image" src="https://github.com/user-attachments/assets/807e5145-61d0-4325-bcb2-e85743dd8083" />
+
+### Cuadro de mando
+
+<img width="496" height="397" alt="image" src="https://github.com/user-attachments/assets/7f85b214-82be-475b-9ae2-472c65374a19" />
