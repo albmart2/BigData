@@ -25,3 +25,21 @@ Para realizar el análisis, el departamento financiero y de sistemas le entregan
 4. Correlación entre el coste de envío y el beneficio, indicando la tendencia.
 5. Crear un cuadro de mando.
 6. Crear una historia.
+
+## Solución
+
+### Ventas vs Beneficio
+
+<img width="491" height="362" alt="image" src="https://github.com/user-attachments/assets/3dc5b211-a76b-40c0-832f-06901a73ba75" />
+
+### Mapa Ventas vs Beneficio
+
+<img width="494" height="362" alt="image" src="https://github.com/user-attachments/assets/a1f5b79b-e752-48cf-a0ac-1856fb1b4e72" />
+
+### Beneficio temporal
+
+<img width="449" height="407" alt="image" src="https://github.com/user-attachments/assets/3b22359a-d012-4066-9c89-dbbe82c14851" />
+
+### Beneficio vs Costes beneficios
+
+<img width="433" height="410" alt="image" src="https://github.com/user-attachments/assets/807e5145-61d0-4325-bcb2-e85743dd8083" />
