@@ -157,3 +157,100 @@ Just look for love in it
     2. ¿Qué palabra se repite más veces?
     3. ¿Qué palabra se repite seis veces?
     4. ¿Cuántas veces aparece la palabra “eyes”?
+
+## Solución
+
+1. Crear ficheros de texto en la máquina Ubuntu:
+
+   Crear un directorio nuevo para la práctica 1:
+
+   ```bash
+   mkdir hadoop/practica1
+   ```
+
+   Crear los ficheros con la letra de las canciones:
+
+   ```bash
+   cd hadoop/practica1
+   sudo nano cancion1.txt
+   sudo nano cancion2.txt
+   sudo nano cancion3.txt
+   ```
+
+   <img width="732" height="493" alt="image" src="https://github.com/user-attachments/assets/e540f25c-e454-4022-abb0-9fee49f80f9d" />
+
+   <img width="727" height="534" alt="image" src="https://github.com/user-attachments/assets/b7967def-ae14-4aa5-a470-3be78c350437" />
+
+   <img width="668" height="526" alt="image" src="https://github.com/user-attachments/assets/ed436dfc-da2d-4055-a180-b5215afd8cd1" />
+
+2. Subir los ficheros a HDFS.
+
+   Añadir los ficheros a HDFS:
+
+   ```bash
+   hdfs dfs -mkdir /practica1
+    hdfs dfs -put *.txt /practica1
+   ```
+
+   Comprobar si se han añadido correctamente:
+
+   ```bash
+   hdfs dfs -ls /practica1
+   ```
+
+3. Ejecutar un <i>wordcount</i> y resolver las siguientes cuestiones:
+
+   Ejecutar <i>wordcount</i>:
+
+   ```bash
+   hadoop jar /home/bigdata/hadoop/share/hadoop/mapreduce/hadoop-mapreduceexamples-3.3.1.jar wordcount /practica1 /outcanciones
+   ```
+
+   1. Acceder al “jobhistory” e indicar el valor de Status del job con el nombre "word count".
+
+      Acceder al “jobhistoy” (es necesario que antes se haya levantado el demonio MrJobHistory) “http://localhost:8088”.
+
+      <img width="1680" height="397" alt="image" src="https://github.com/user-attachments/assets/39f17b7a-d80e-41f1-aed2-9ccdede6ca3d" />
+
+      Se puede comprobar que el Status es exitoso.
+
+      <img width="1452" height="753" alt="image" src="https://github.com/user-attachments/assets/44097afa-0602-4752-b4b5-4e4e87dce0e4" />
+
+   2. ¿Qué palabra se repite más veces?
+
+      Revisar la salida:
+
+      ```bash
+      hdfs dfs -ls -R /outcanciones
+      hdfs dfs -cat /outcanciones/part-r-00000
+      ```
+
+      Para obtener la palabra que más se repite, ordenar la salida por la segunda columna numérica en orden descendente y quedarse con la primera:
+
+      ```bash
+      hdfs dfs -cat /outcanciones/* | sort -k2nr | head -1
+      ```
+
+      El resultado es la palabra “<b>the</b>”, con <b>34 apariciones</b>.
+
+   3. ¿Qué palabra se repite seis veces?
+
+      Para obtener las palabras que se repiten seis veces, usar el comando grep:
+
+      ```bash
+      hdfs dfs -cat /outcanciones/* | grep '6'
+      ```
+
+      Se obtienen las palabras: “You”, “charade”, “ha”, “laugh”, “our” y “we”.
+
+      Nota: al ser casesensitive, aparece también “16”.
+
+   4. ¿Cuántas veces aparece la palabra “eyes”?
+
+      Se obtienen las veces que aparece la palabra “eyes” con el siguiente comando:
+  
+      ```bash
+      hdfs dfs -cat /outcanciones/* | grep '\<eyes.*\>'
+      ```
+      
+      Y se observa que aparece cuatro veces.
