@@ -1,4 +1,4 @@
-# Caso Práctico con Solución: SPARK
+# Caso práctico
 
 ## Objetivo
 
