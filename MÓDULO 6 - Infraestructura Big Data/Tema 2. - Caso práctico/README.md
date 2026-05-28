@@ -1,7 +1,5 @@
 # Caso Práctico con Solución
 
----
-
 ## PARTE 1: PIG
 
 ### Objetivo
@@ -196,8 +194,6 @@ Indicar los comandos empleados para resolver las siguientes cuestiones:
 4. Acceder a Hive y ejecutar una consulta sencilla (`select *`) para verificar que hay datos y que se han cargado correctamente. En caso contrario, volver a cargar los datos.
 5. Calcular los discos que estuvieron a la vez entre los cinco primeros puestos en EE. UU. y en el Reino Unido.
 6. **(OPCIONAL)** Obtener la máxima y mínima posición que ocuparon los discos de Pink Floyd en EE. UU. y en el Reino Unido (empleando los comandos `order` y `limit` en dos sentencias).
-
----
 
 ### Solución
 
