@@ -1,12 +1,8 @@
 # Caso Práctico con Solución: SPARK
 
----
-
 ## Objetivo
 
 Poner en práctica los conocimientos adquiridos sobre la herramienta Spark para resolver el ejercicio.
-
----
 
 ## Se Pide
 
@@ -41,8 +37,6 @@ Indicar los comandos empleados para resolver las siguientes cuestiones:
 6. Calcular los discos que ocuparon a la vez posiciones entre las cinco primeras en ambos rankings.
 7. Obtener la máxima y mínima posición que ocuparon los discos de Pink Floyd en EE. UU. y en el Reino Unido.
 8. Obtener los títulos de los discos en mayúsculas.
-
----
 
 ## Solución
 
