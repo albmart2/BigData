@@ -1,4 +1,4 @@
-# Caso Práctico con Solución
+# Caso práctico
 
 ## PARTE 1: PIG
 
