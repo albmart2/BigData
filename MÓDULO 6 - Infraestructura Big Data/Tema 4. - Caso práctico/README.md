@@ -1,4 +1,4 @@
-# Caso Práctico con Solución: Arquitecturas de Streaming
+# Caso práctico
 
 ## Objetivo
 
