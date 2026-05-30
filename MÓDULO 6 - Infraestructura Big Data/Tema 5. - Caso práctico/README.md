@@ -1,4 +1,4 @@
-# Caso Práctico: Spark Streaming con datos financieros
+# Caso Práctico
 
 ## Contexto
 
