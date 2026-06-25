@@ -336,3 +336,5 @@ A continuación, se elimina el nodo:
 MATCH (a:Autor{Nombre: "Bram Stoker"})
 DELETE a;
 ```
+
+
