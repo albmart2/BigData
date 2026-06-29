@@ -3,7 +3,7 @@
 ## Enunciado
 
 Resolver las siguientes sentencias en Redis:
-1. **Guardar los siguientes datos en claves de tipo nombrei, emaili, con i=1,2,3.**
+1. **Guardar los siguientes datos en claves de tipo *nombrei*, *emaili*, con *i=1,2,3*.**
     1. Juan Gallardo López, con *e-mail* jgl@gmail.com
     2. Isabel Sanz Alonso, con *e-mail* isa10@hotmail.com
     3. Pepe Azul Téllez, con *e-mail* pazte@gmail.com
@@ -22,3 +22,16 @@ Resolver las siguientes sentencias en Redis:
 8. **Crear los conjuntos de valores *Colores1={Azul, Amarillo, Rojo, Verde, Gris, Negro}* y *Colores2={Marrón, Negro, Rosa, Azul, Blanco}*. Encontrar la intersección de ambos conjuntos.**
 9. **Obtener la unión y la diferencia de los conjuntos anteriores.**
 10. **Crear un conjunto ordenado con los siguientes valores: 100, 90, 23, 300, 99, 12.**
+
+## Solución
+
+1. **Guardar los siguientes datos en claves del tipo *nombrei*, *emaili*, con *i=1,2,3*.**
+    1. Juan Gallardo López, con *e-mail* jgl@gmail.com
+    2. Isabel Sanz Alonso, con *e-mail* isa10@hotmail.com
+    3. Pepe Azul Téllez, con *e-mail* pazte@gmail.com
+  
+    ```bash
+    MSET nombre1 "Juan Gallardo López" email1 "jgl@gmail.com"
+    MSET nombre2 "Isabel Sanz Alonso" email2 "isa10@hotmail.com"
+    MSET nombre3 "Pepe Azul Tellez" email3 pazte@gmail.com
+    ```
