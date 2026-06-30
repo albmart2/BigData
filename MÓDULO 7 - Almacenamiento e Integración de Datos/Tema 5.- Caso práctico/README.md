@@ -32,6 +32,105 @@ Resolver las siguientes sentencias en Redis:
   
     ```bash
     MSET nombre1 "Juan Gallardo López" email1 "jgl@gmail.com"
+    ```
+    
+    ```bash
     MSET nombre2 "Isabel Sanz Alonso" email2 "isa10@hotmail.com"
+    ```
+
+    ```bash
     MSET nombre3 "Pepe Azul Tellez" email3 pazte@gmail.com
+    ```
+    
+1. **Obtener el *e-mail* 2 y el nombre 3 de los anteriores registros.**
+    1. Juan Gallardo López, con *e-mail* jgl@gmail.com
+    2. Isabel Sanz Alonso, con *e-mail* isa10@hotmail.com
+    3. Pepe Azul Téllez, con *e-mail* pazte@gmail.com
+
+    ```bash
+    MGET email2 nombre3
+    ```
+
+2. **Añadir tres nuevos registros para las edades, que son, respectivamente, 34, 36 y 40, usando claves de tipo *edadi* con *i=1,2,3*.**
+
+    ```bash
+    MSET edad1 34 edad2 36 edad3 40
+    ```
+
+3. **Decrementar la edad 2 en cuatro unidades.**
+
+    ```bash
+    DECRBY edad2 4
+    ```
+
+4. **Crear una lista que contenga las siguientes cadenas: *Identificador:3434*, *Nombre: Antonio Sancho García*, *Edad: 34*.**
+
+    ```bash
+    LPUSH registro1 "Identificador:3434" "Nombre: Antonio Sancho Garcia" "Edad: 34"
+    ```
+
+5. **Considerar los datos de la película siguiente (se pide almacenar los datos usando una hash):**
+    1. Nombre: *ET. El extraterrestre*.
+    2. Año: 1982.
+    3. Género: ciencia ficción.
+    4. Duración: 115 minutos.
+  
+    ```bash
+    HSET pelicula "titulo" "ET.El extraterrestre" "año" 1982 "genero" "Ciencia Ficcion" "duracion" "115 minutos"
+    ```
+    
+    ```bash
+    HGETALL película
+    ```
+
+6. **Del anterior agregado, hay que recuperar solo los valores y las claves utilizadas.**
+
+    ```bash
+    HKEYS película
+    ```
+
+7. **Crear los conjuntos de valores *Colores1={Azul, Amarillo, Rojo, Verde, Gris, Negro}* y *Colores2={Marrón, Negro, Rosa, Azul, Blanco}*. Encontrar la intersección de ambos conjuntos.**
+
+    ```bash
+    SADD colores1 "Azul" "Amarillo" "Rojo" "Verde" "Gris" "Negro"
+    ```
+    
+    ```bash
+    SADD colores2 "Marrón" "Negro" "Rosa" "Azul" "Blanco"
+    ```
+    
+    ```bash
+    SINTER colores1 colores2
+    ```
+
+9. **Obtener la unión y la diferencia de los conjuntos anteriores.**
+
+    ```bash
+    SUNION colores1 colores2
+    ```
+    
+    ```bash
+    SDIFF colores1 colores2
+    ```
+
+10. **Crear un conjunto ordenado con los siguientes valores: 100, 90, 23, 300, 99, 12.**
+
+    ```bash
+    ZADD ordenado 1 "Amarillo"
+    ```
+    
+    ```bash
+    ZADD ordenado 2 "Azul"
+    ```
+    
+    ```bash
+    ZADD ordenado 3 "Rojo"
+    ```
+    
+    ```bash
+    ZADD ordenado 3 "Negro"
+    ```
+    
+    ```bash
+    ZREVRANGE ordenado 0 3
     ```
