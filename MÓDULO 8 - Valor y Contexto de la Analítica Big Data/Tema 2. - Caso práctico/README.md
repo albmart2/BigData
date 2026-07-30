@@ -30,3 +30,13 @@ Resumiendo, algunos de los problemas encontrados fueron los siguientes:
 
 Responder a la siguiente pregunta:
 - ¿Cuáles fueron las causas que hicieron que el proyecto no pudiera llevarse a una fase de implantación del plan de gobierno del dato?
+
+## Solución
+
+Algunas de las posibles causas son las siguientes:
+
+- Aproximación basada en el proyecto y no en el proceso. Es decir, a pesar de informar y comunicar que la política de gobierno del dato es un proceso que debe apoyarse en proyectos para madurar, se le dio un enfoque completo de proyecto, sin abordar cambios culturales posteriores.
+- Falta de presupuesto para abordar las siguientes fases del plan. La falta de presupuesto no es tanto una causa en sí misma, sino una consecuencia, debido a un mal sponsor del proyecto, como se verá a continuación.
+- El sponsor en un proyecto de gobierno del dato debe ser un perfil de alta dirección, capaz de transmitir los cambios organizativos y de estrategia definidos en el plan y empujar hacia la consecución de los cambios.
+- Aproximación técnica generalista, primando el coste tecnológico sobre la eficiencia. Se esperaba desarrollar toda la política de forma manual, evitando cualquier inversión técnica, pero incrementando exponencialmente el coste en servicios. Una política de gobierno del dato debe basarse en la eficiencia y buscar los mecanismos para que su integración sea lo más suave posible, evitando grandes cargas de trabajo manuales. Habitualmente, se requieren herramientas que faciliten la adopción y ejecución del plan. Una aproximación “manual” va a requerir tal esfuerzo de implantación que hará inviable la ejecución del plan propuesto.
+- Beneficio: es necesario disponer de una medida clara del beneficio aportado, ya sea en reducción de costes, nuevos servicios, agilidad, mitigación de riesgo…, y cada proyecto dentro del proceso de gobierno debe tener definidos de forma muy clara el impacto y el beneficio que aporta en los ejes de gobierno.
