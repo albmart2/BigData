@@ -69,8 +69,9 @@ Según este mapa de proyectos, se deberá generar un gráfico o una tabla donde 
 
 Los estudiantes deberán entonces elaborar dos gráficos:
 
-a) Coste vs. beneficio del proyecto.
-
-b) Coste vs. tiempo de retorno.
+<ol type="a">
+  <li>Coste vs. beneficio del proyecto.</li>
+  <li>Coste vs. tiempo de retorno.</li>
+</ol>
 
 Según estos gráficos, establecer una priorización en un intervalo de tres años y explicar qué proyectos se abordarían y en qué orden.
