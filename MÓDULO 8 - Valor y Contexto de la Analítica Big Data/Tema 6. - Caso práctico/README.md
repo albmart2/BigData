@@ -1,7 +1,7 @@
 # Casos prácticos con solución
 
-1. [Caso práctico con solución 1](#1-caso-práctico-con-solución-1)
-2. [Caso práctico con solución 2](#2-caso-práctico-con-solución-2)
+- [Caso práctico con solución 1](#1-caso-práctico-con-solución-1)
+- [Caso práctico con solución 2](#2-caso-práctico-con-solución-2)
 
 ## Caso práctico con solución 1
 
