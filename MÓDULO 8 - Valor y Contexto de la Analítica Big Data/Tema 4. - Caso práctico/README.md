@@ -75,3 +75,35 @@ Los estudiantes deberán entonces elaborar dos gráficos:
 </ol>
 
 Según estos gráficos, establecer una priorización en un intervalo de tres años y explicar qué proyectos se abordarían y en qué orden.
+
+## Solución
+
+Una posible solución al problema sería la siguiente:
+
+En la siguiente tabla, se anotan todos los casos de uso y se ponderan del 1 al 10 las columnas “Complejidad”, “Beneficio neto” y “Tiempo de retorno”, de acuerdo con las instrucciones planteadas en el enunciado.
+
+En esta tabla, ponemos todos los casos de uso y ponderamos del 1 al 10 las columnas Complejidad, Beneficio neto y Tiempo de retorno de acuerdo con las instrucciones planteadas anteriormente.
+
+<img width="1257" height="816" alt="image" src="https://github.com/user-attachments/assets/bb5aa019-998f-4c06-9282-d11dfa265113" />
+
+Una vez tabulados los datos, se procede a construir las dos gráficas.
+
+En la primera, “Beneficio neto vs. complejidad”, se coloca en el eje X el beneficio neto con una escala de 1 a 10, y en el eje Y la complejidad con la misma escala:
+
+<b><p align="center">
+  Beneficio vs. complejidad.
+</p></b>
+
+<img width="1079" height="632" alt="image" src="https://github.com/user-attachments/assets/0576dc8b-e6a7-449c-b98a-e9e6a527d296" />
+
+En la segunda gráfica, “Tiempo de retorno vs. complejidad”, se utiliza el eje X para el tiempo de retorno y la complejidad se representa en el eje Y, ambas con escala de 1 al 10:
+
+<b><p align="center">
+  Tiempo de retorno vs. complejidad.
+</p></b>
+
+<img width="1185" height="630" alt="image" src="https://github.com/user-attachments/assets/de571202-d62b-447a-a914-f5ed9da19dfa" />
+
+Una vez analizadas estas dos gráficas, corresponde tomar la decisión de qué casos de uso se abordarán en el primer, segundo y tercer año respectivamente. Para esta decisión, se toman como base las tres variables analizadas: complejidad, beneficio neto y tiempo de retorno, así como lo que se considere más beneficioso para el negocio.
+
+<img width="1206" height="880" alt="image" src="https://github.com/user-attachments/assets/ee700315-f9b3-4da6-a717-994adc8e544f" />
