@@ -171,3 +171,82 @@ Para el seguimiento de este ejercicio guiado, debe descargarse el siguiente arch
 [wLTisPEkTCOlQzVK-7_2_Apdo_3_1_punto7.docx](https://github.com/user-attachments/files/31976476/wLTisPEkTCOlQzVK-7_2_Apdo_3_1_punto7.docx)
 
 ### Fase de ejecución
+
+1. Se puede observar que no hay datos todavía.
+
+    - Kafka.
+        > **Nota**: están los tópicos de prueba del ejercicio “KafkaGW”, pero podéis observar que no hay nuevos datos ni están los tópicos del “KafkaGW2”.
+        
+        <img width="1680" height="1439" alt="image" src="https://github.com/user-attachments/assets/11c88b52-5c24-4ac8-8f6d-ade7b66c4cc7" />
+
+    - Cassandra.
+    - Elasticsearch, http://localhost:9200/sensors/_count
+
+        <img width="1680" height="1450" alt="image" src="https://github.com/user-attachments/assets/b482b54b-27f4-4de3-b752-e56829e0ecf3" />
+
+2. Ejecutamos el *pipeline* de “```2_locations```”:
+
+    De momento, no hay datos de localización porque no hemos lanzado el script de los devices (el único registro es de la salida “2” metadatos que lo hemos descartado y enviado a la basura).
+
+   <img width="672" height="491" alt="image" src="https://github.com/user-attachments/assets/2fdf1674-8f79-4958-8627-4f51312263e0" />
+
+3. Comprobar que no hay ningún device registrado en los lwM2M server:
+    - KafkaGW => http://localhost:8080/#/clients
+    - KafkaGW2 => http://localhost:8077/#/clients
+  
+4. Vamos a ejecutar el script de leshanBULK.sh:
+
+    - Sin argumentos, elimina los procesos de leshan-client que hubiera ejecutándose, por lo que lo utilizaremos para parar los procesos.
+
+    ```bash
+    imf@imf-vm:~/e2e$ ./leshanBULK.sh
+    ```
+
+    No arguments supplied. Deleting all leshan-clients running
+
+    ```bash
+    imf@imf-vm:~/e2e$
+    ```
+    - Con argumentos, define el número de devices especificados. El output de los clientes-leshan se mostrará en la misma sesión, por lo que tiene que permanecer abierta.
+
+    ```bash
+    imf@imf-vm:~/e2e$ ./leshanBULK.sh 20
+    imf@imf-vm:~/e2e$
+    ```
+
+5. Una vez ejecutado el *script*, se habrán registrado los ‘n’ *devices* configurados. En la ventana de ejecución se pueden observar los mensajes de los clientes.
+
+6. Comprobar que ahora están los devices registrados en los lwM2M server:
+
+    - KafkaGW => http://localhost:8080/#/clients
+    - KafkaGW2 => http://localhost:8077/#/clients
+  
+    <img width="1680" height="1507" alt="image" src="https://github.com/user-attachments/assets/df509ef8-53c0-46a3-ae82-5843377afbb0" />
+
+7. Ejecutamos el siguiente pipeline ahora que tenemos ya todos los tópicos creados:
+
+    <img width="1680" height="1856" alt="image" src="https://github.com/user-attachments/assets/131ba5e5-dbc0-4a3a-8d0d-2e8b4eabfab4" />
+
+8. Ahora están ya todos los flujos de datos y comunicación abiertos. El cliente demo de Leshan tiene un carácter académico, por lo que no realiza automáticamente el refresco de los datos a menos que se lo indiquemos.
+
+    Una vez que le demos a “observe” a la Instancia 0 de Temperature, se podrá observar cómo ya se están recibiendo datos en toda la cadena.
+   
+   <img width="672" height="364" alt="image" src="https://github.com/user-attachments/assets/2c1f073f-e080-4054-a6c0-c284932b9619" />
+
+9. Iniciar la observación en todos los *devices*:
+
+    <img width="672" height="297" alt="image" src="https://github.com/user-attachments/assets/3097f9fa-e892-4b86-918b-88237666c389" />
+
+10. Observar que no hay datos todavía:
+    - Kafka, http://localhost:8085/topic/KafkaGW2_observation
+    - Cassandra
+
+        http://localhost:8090/datos/sensors
+
+        http://localhost:8090/datos/location
+
+        <img width="1680" height="1069" alt="image" src="https://github.com/user-attachments/assets/9379d1f1-7a38-49ae-937a-f02a1ef24c30" />
+
+    - Elasticsearch, http://localhost:9200/sensors/_count
+
+        <img width="498" height="100" alt="image" src="https://github.com/user-attachments/assets/4f22249b-15d0-4544-a685-e04f9ac8b661" />
