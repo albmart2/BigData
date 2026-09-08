@@ -250,3 +250,114 @@ Para el seguimiento de este ejercicio guiado, debe descargarse el siguiente arch
     - Elasticsearch, http://localhost:9200/sensors/_count
 
         <img width="498" height="100" alt="image" src="https://github.com/user-attachments/assets/4f22249b-15d0-4544-a685-e04f9ac8b661" />
+
+### Visualización en *real time*
+
+Utilizamos Kibana: http://localhost:5601
+
+- Discover:
+
+    Para visualizar los datos que podemos obtener de los índices de Elasticsearch.
+
+    <img width="572" height="269" alt="image" src="https://github.com/user-attachments/assets/93bc3793-73bf-4106-a251-88dd366c9776" />
+
+    Para *locations*, ajustar el periodo (parte superior derecha) para ver los datos, pues puede darse el caso de que existan datos en ese periodo.
+
+    <img width="572" height="269" alt="image" src="https://github.com/user-attachments/assets/c0fa7c02-fea4-44da-8ccd-5dc737d75975" />
+
+    <img width="672" height="280" alt="image" src="https://github.com/user-attachments/assets/631d2834-e9b3-4c6e-8795-64744c940771" />
+
+- Visualize:
+
+    Vamos a crear dos visualizaciones básicas a modo de ejemplo.
+
+    <img width="672" height="349" alt="image" src="https://github.com/user-attachments/assets/e4e87217-77d7-4a39-9922-fd8a7658f13a" />
+
+    “CoordinateMaps”, para utilizar los datos de geopoint del índice de “locations”:
+
+    <img width="672" height="341" alt="image" src="https://github.com/user-attachments/assets/90ab75b2-160b-47ce-a48c-cac3e8f2a142" />
+
+    “Basic Charts => Line”, para visualizar la tendencia de los valores:
+
+    <img width="672" height="281" alt="image" src="https://github.com/user-attachments/assets/d6526fea-0e6c-487d-98cf-3f257a51b75b" />
+
+    > **Nota**: Los más observadores se darán cuenta de que los datos están continuamente bajando, es decir, disminuyendo la temperatura, incluso a valores imposibles. Esto se debe a que el cliente Leshan tiene un ciclo de histeria mal diseñado y tiende a bajar constantemente cuando genera los valores de temperatura.
+
+### Procesamiento analítico desde Jupyter y Python
+
+Ahora, vamos a leer esa información desde un notebook en Python. Abrir Jupyter notebooks, http://localhost:8888. Importar el notebook: ```6_PythonReadCassandra2.ipynb``` y seguir los pasos.
+
+<img width="497" height="476" alt="image" src="https://github.com/user-attachments/assets/a3d0f2d0-db40-48df-be03-9eae984239c3" />
+
+<img width="525" height="260" alt="image" src="https://github.com/user-attachments/assets/9b3cd413-6e15-445b-b71f-94bc240662a7" />
+
+### Ejemplo con *devices* reales
+
+A modo de ejemplo, sustituyendo los emuladores de Leshan por HW de verdad. Para la parte de adquisición de datos se ha utilizado la Raspberry Pi 3 y un único sensor (AOSONG DHT11) que recoge de forma simultánea las medidas de temperatura y humedad. Para ello, se ha utilizado el bus GPIO de la Raspberry Pi y la plataforma AdaFruit para acceder al bus y leer la información del sensor.
+
+<img width="533" height="331" alt="image" src="https://github.com/user-attachments/assets/7f693a31-944f-4b41-b02e-16b6e2a2ce07" />
+
+Esta información se vuelca a ficheros de log que van rotando diariamente y con una retención de 7 días (configurado con logwatch).
+
+Con esos datos se va a alimentar el bus de comunicaciones a través de un Kafka Producer client. Para ello se ha instalado dicho SW en la Raspi. En cada una de las instancias se crearán diferentes flujos de trabajo para inyectar los datos en Kafka y realizar los procesos de ETL para Cassandra y visualización.
+
+Para la distribución y transformación de los datos para almacenamiento y visualización, se han definido los siguientes pipelines: “Kafka2Cassandra” y “Kafka2ElasticSearch”. Ambos flujos leen los datos de Kafka para el tópico “SensorTH”, aplican una pequeña conversión en el campo fecha para pasarlo de Unix a un formato humano y lo almacenan en ficheros locales (tanto en la RaspberryPi como en el ordenador) e inyectan a la base de datos Cassandra y al indexador/almacenamiento Elasticsearch respectivamente.
+
+La base de datos ha creado simplemente una tabla para almacenar los datos tal cual son recibidos a través de Kafka. Los valores clave son SensorId y Fecha (para poder permitir múltiples sensores).
+
+Para la visualización se ha optado por Kibana, ya que ofrece una integración más sencilla y la posibilidad de incluir Elasticsearch (para una indexación y almacenamiento buffer), que nos permitirá observar en tiempo real y con poco coste de cómputo consultas de los datos obtenidos. Además, ofrece interesantes funcionalidades para las agregaciones de las fechas de forma muy sencilla y transparente para el usuario.
+
+Se ha elaborado un dashboard básico con la información agregadas de humedad, temperatura, gráficos con los históricos de las temperaturas y humedad, valores medios de los sensores, etc.
+
+Este dashboard está mostrando los valores cada 5 segundos con un delay de 10-15 segundos respecto al valor leído. Este retraso se introduce por volcado Linux al fichero en la RaspberryPi.
+
+<img width="792" height="478" alt="image" src="https://github.com/user-attachments/assets/72a25d00-2533-4fdb-9abe-4d038910f317" />
+
+## Conclusión
+
+En este trabajo se ha observado de cerca y se ha implementado una solución end-to-end de IoT: desde el sensor hasta la visualización de datos y analítica, utilizando componentes asequibles para el consumidor, SW gratuito y reutilización de HW.
+
+Las mayores complicaciones han sido principalmente interconectar todos los componentes de una forma rápida, eficaz, de bajo coste y que sea escalable tanto vertical como horizontalmente.
+
+La elección de los componentes de la arquitectura siempre será una tarea ardua, pues requerirá valorar las capacidades y beneficios de cada una de las herramientas en sus funciones, con la peculiaridad añadida de que existe una gran variedad de SW para las mismas funciones y que muchas de ellas realizan funciones complejas. Por ejemplo, para la distribución de mensajes, podría haberse optado por Flume o RabbitQM en vez de Kafka, que hubieran sido también viables para esta solución.
+
+Esta solución es escalable gracias en gran parte a la distribución de mensajes mediante Kafka y bases de datos de Cassandra, que pueden ser fácilmente ampliables añadiendo nuevos elementos en los respectivos clústeres de trabajo. Asimismo, la herramienta de visualización e indexación (que también es escalable) ofrece grandes posibilidades de desarrollo para el dashboard independientemente de las medidas, número de variables o cantidad de elementos que interconectar.
+
+La posibilidad de analizar los datos con R o Python utilizando la base de datos o incluso el mismo Kafka ofrece grandes posibilidades de procesamiento batch para un análisis de los datos y añadir nuevas fuentes de datos para poder contrastar o potenciar estos análisis. Es verdad, no obstante, que debido a los pocos datos obtenidos en esta simulación y a la validez de los mismos se ha limitado el caso prácticamente a monitorización y procesado de los datos.
+
+## Ejercicio
+
+El objetivo de este ejercicio es realizar una reflexión teórica basada en la arquitectura anterior.
+
+> *Nota*: este ejercicio es evaluable y deberá entregarse al final del módulo junto con los ejercicios del resto de unidades.
+
+1. Valora qué usos podría tener registrar los datos de temperatura y humedad. Es decir, qué casos de uso, modelo de negocio y aplicaciones podrían darse con estos datos. Por ejemplo, cómo podrían usarse para mejorar la calidad de vida o los servicios de una ciudad.
+
+    Estos datos pueden utilizarse para mejorar la calidad de vida en ciudades inteligentes, controlar la climatización de edificios, optimizar el consumo energético y detectar condiciones ambientales desfavorables. También tienen aplicaciones en agricultura, logística, almacenamiento de alimentos y hogares inteligentes. Como modelo de negocio, se podrían ofrecer servicios de monitorización, alertas y análisis de datos mediante suscripción.
+
+2. ¿La arquitectura funcional cumple con los requerimientos de escalabilidad, redundancia, gestión y seguridad para poder conectar miles de dispositivos? ¿La arquitectura tiene en cuenta la no homogeneidad que se representa en la realidad y puede integrar y gestionar dispositivos de diferentes proveedores y con diferentes tecnologías?
+
+    La arquitectura puede ser escalable si permite añadir nuevos servidores y dispositivos sin afectar al funcionamiento del sistema. La redundancia y replicación permiten evitar pérdidas de datos ante fallos. Además, debe incorporar autenticación, cifrado y control de acceso. Para gestionar dispositivos de diferentes fabricantes, es necesario utilizar protocolos y sistemas de integración que permitan normalizar los datos.
+
+3. En vez de un broker basado en Kafka, ¿podría haberse utilizado un MQTT? En vez de almacenar en Cassandra, si lo almacenamos en HDFS, ¿qué beneficios inherentes podríamos tener?
+
+    Sí, MQTT podría utilizarse en lugar de Kafka, ya que es un protocolo ligero y especialmente diseñado para dispositivos IoT. Kafka está más orientado a gestionar grandes volúmenes de eventos.
+
+    Si se utilizara HDFS en lugar de Cassandra, se obtendría un almacenamiento distribuido y escalable, adecuado para grandes cantidades de datos históricos y procesamiento Big Data. Cassandra sería más adecuada para consultas rápidas y frecuentes.
+
+4. ¿Qué costes de implementación, mantenimiento y gestión de la plataforma observas claramente?
+
+    Los principales costes serían la compra e instalación de sensores, infraestructura de servidores y almacenamiento, comunicaciones, mantenimiento de dispositivos, actualizaciones de software, seguridad y gestión de la plataforma. Además, cuantos más dispositivos haya, mayores serán los costes de almacenamiento, procesamiento y mantenimiento.
+
+## Herramientas utilizadas
+
+A continuación, se facilita un listado con una breve descripción sobre las herramientas (software) utilizadas para el desarrollo del ejercicio. Se pueden consultar los enlaces para profundizar sobre esas herramientas:
+
+- Leshan, https://github.com/eclipse/leshan. Leshan es un proyecto de Eclipse que ofrece un cliente y servidor para LwM2M en java.
+- StreamSets, http://streamsets.com/. Herramienta utilizada para los procesos de ETL (Extract-Tranform-Load) e interconexión de los diferentes componentes del ejercicio.
+- Apache Kafka, Confluent, https://www.confluent.io/. Versión de Apache Kafka, herramienta de distribución de alta capacidad para la publicación/distribución de mensajes.
+- Apache Cassandra, http://cassandra.apache.org/. Base de datos NoSQL de alta capacidad y servicios en clúster.
+- Elastic, https://www.elastic.co/. Herramienta de indexación y visualización de datos en tiempo real. En este caso hemos utilizado los componentes Elasticsearch y Kibana.
+- Anaconda, https://anaconda.org/. Plataforma de SW que combina multitud de herramientas útiles para Data Science. Ofrece una plataforma unificada, gestión de paquetes y entornos de forma sencilla. En este caso hemos utilizado principalmente los componentes de Jupyter, Python y R.
+- Draw, http://draw.io. Para la elaboración de los diagramas y dibujos de interconexión, hemos utilizado esta herramienta de diagramas gratuita.
+- Stack Overflow, https://es.stackoverflow.com/. Página web de gran ayuda para todos los programadores. Un gran foro donde resolver, plantear y ayudar con los problemas de programación en cualquier lenguaje y entorno.
