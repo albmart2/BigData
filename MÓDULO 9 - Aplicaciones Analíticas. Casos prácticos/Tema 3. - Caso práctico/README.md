@@ -329,7 +329,7 @@ La posibilidad de analizar los datos con R o Python utilizando la base de datos 
 
 El objetivo de este ejercicio es realizar una reflexión teórica basada en la arquitectura anterior.
 
-> *Nota*: este ejercicio es evaluable y deberá entregarse al final del módulo junto con los ejercicios del resto de unidades.
+> **Nota**: este ejercicio es evaluable y deberá entregarse al final del módulo junto con los ejercicios del resto de unidades.
 
 1. Valora qué usos podría tener registrar los datos de temperatura y humedad. Es decir, qué casos de uso, modelo de negocio y aplicaciones podrían darse con estos datos. Por ejemplo, cómo podrían usarse para mejorar la calidad de vida o los servicios de una ciudad.
 
